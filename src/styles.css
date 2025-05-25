@@ -56,3 +56,46 @@ body {
   display: flex;
   gap: 12px;
 }
+
+dialog {
+  background-color: #000;
+  color: #fff;
+  border-radius: 12px;
+  border: 1px solid #fff;
+  padding: 20px;
+}
+
+dialog::backdrop {
+  backdrop-filter: blur(2px);
+}
+
+dialog > div {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+dialog > div > form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+dialog > div > form > div {
+  display: flex;
+  flex-direction: column;
+}
+
+dialog > div > form > div > input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #fff;
+  color: #fff;
+  outline: none;
+}
+
+.dialog-btns {
+  display: flex;
+  gap: 12px;
+}
