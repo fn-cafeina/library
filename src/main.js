@@ -1,12 +1,3 @@
-const addBookBtn = document.querySelector(".add-book-btn");
-
-function openDialog() {
-  const dialog = document.querySelector("dialog");
-  dialog.showModal();
-}
-
-addBookBtn.addEventListener("click", openDialog);
-
 function renderBooks(books) {
   const library = document.querySelector(".library");
 
@@ -39,7 +30,7 @@ function renderBooks(books) {
   });
 }
 
-const books = [
+const myLibrary = [
   {
     title: "Moby-Dick",
     author: "Herman Melville",
@@ -60,4 +51,44 @@ const books = [
   }
 ];
 
-renderBooks(books);
+renderBooks(myLibrary);
+
+const dialog = document.querySelector("dialog");
+const addBookBtn = document.querySelector(".add-book-btn");
+const dialogCancelBtn = document.querySelector(".dialog-cancel-btn");
+
+function openDialog() {
+  dialog.showModal();
+}
+
+function closeDialog() {
+  dialog.close();
+}
+
+addBookBtn.addEventListener("click", openDialog);
+dialogCancelBtn.addEventListener("click", closeDialog);
+
+function Book(title, author, pages, readed) {
+  if (!new.target) {
+    throw Error("You must use the 'new' operator to call the constructor");
+  }
+
+  this.title = title;
+  this.author = author;
+  this.pages = pages;
+  this.readed = readed;
+
+  this.toggleRead = function() {
+    this.pages = !this.pages;
+  }
+}
+
+function addBookToLibrary(book) {
+  myLibrary.push(book);
+}
+
+const bookTitle = document.querySelector(".book-title");
+const bookAuthor = document.querySelector(".book-author");
+const bookPages = document.querySelector(".book-pages");
+const readedSelect = document.querySelector(".readed-select");
+const dialogAcceptBtn = document.querySelector(".dialog-accept-btn");
