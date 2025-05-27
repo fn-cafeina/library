@@ -5,7 +5,7 @@ A practical and simple library as a slightly more advanced practice of objects i
 
 ## Demo
 <p align="center">
-  <img alt="Demo image 0" src="demo/demo-o.png">
+  <img alt="Demo image 0" src="demo/demo-0.png">
 </p>
 
 ## Resources
