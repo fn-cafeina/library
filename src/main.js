@@ -1,9 +1,15 @@
+const myLibrary = [];
+
+myLibrary.push(new Book("Moby-Dick", "Herman Melville", 635, "yes"));
+myLibrary.push(new Book("The Great Gatsby", "F. Scott Fitzgerald", 192, "yes"));
+myLibrary.push(new Book("To Kill a Mockingbird", "Harper Lee", 336, "no"));
+
 function renderBooks(books) {
   const library = document.querySelector(".library");
 
   while(library.firstChild) library.removeChild(library.firstChild);
 
-  books.forEach((book) => {
+  books.forEach((book, index) => {
     const bookDiv = document.createElement("div");
     const titleP = document.createElement("p");
     const authorP = document.createElement("p");
@@ -17,7 +23,13 @@ function renderBooks(books) {
     pagesP.textContent = `Pages: ${book.nPages}`;
 
     removeBtn.textContent = "Remove";
-    readedBtn.textContent = "Readed";
+    readedBtn.textContent = book.readed === "yes" ? "Readed" : "Unread";
+
+    readedBtn.addEventListener("click", () => toggleReadState(myLibrary[index]));
+    removeBtn.addEventListener("click", () => {
+      myLibrary.splice(index, 1);
+      renderBooks(myLibrary);
+    });
 
     removeBtn.classList.add("btn");
     readedBtn.classList.add("btn");
@@ -31,33 +43,6 @@ function renderBooks(books) {
     library.appendChild(bookDiv);
   });
 }
-
-const myLibrary = [
-  {
-    title: "Moby-Dick",
-    author: "Herman Melville",
-    nPages: 635,
-    readed: true,
-    removed: false,
-    id: self.crypto.randomUUID()
-  },
-  {
-    title: "The Great Gatsby",
-    author: "F. Scott Fitzgerald",
-    nPages: 192,
-    readed: true,
-    removed: false,
-    id: self.crypto.randomUUID()
-  },
-  {
-    title: "To Kill a Mockingbird",
-    author: "Harper Lee",
-    nPages: 336,
-    readed: false,
-    removed: false,
-    id: self.crypto.randomUUID()
-  }
-];
 
 renderBooks(myLibrary);
 
@@ -89,12 +74,17 @@ function Book(title, author, nPages, readed) {
   this.id = self.crypto.randomUUID();
 
   this.toggleRead = function() {
-    this.readed = !this.readed;
+    this.readed = this.readed === "yes" ? "no" : "yes";
   }
 
-  this.remove = function() {
+  this.toggleRemove = function() {
     this.removed = !this.removed;
   }
+}
+
+function toggleReadState(book) {
+  book.toggleRead();
+  renderBooks(myLibrary);
 }
 
 function addBookToLibrary() {
