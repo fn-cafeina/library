@@ -120,7 +120,7 @@ function clearInputs() {
   document.getElementById("book-pages").value = "";
 }
 
-document.querySelector(".dialog-accept-btn").addEventListener("click", (e) => {
+document.querySelector(".dialog-accept-btn").addEventListener("click", () => {
   addBookToLibrary();
   renderBooks(myLibrary);
 });
