@@ -24,6 +24,8 @@ function renderBooks(books) {
 
     bookDiv.classList.add("book");
 
+    bookDiv.dataset.id = book.id;
+
     buttonsDivContainer.append(removeBtn, readedBtn);
     bookDiv.append(titleP, authorP, pagesP, buttonsDivContainer);
     library.appendChild(bookDiv);
@@ -35,19 +37,25 @@ const myLibrary = [
     title: "Moby-Dick",
     author: "Herman Melville",
     nPages: 635,
-    readed: true
+    readed: true,
+    removed: false,
+    id: self.crypto.randomUUID()
   },
   {
     title: "The Great Gatsby",
     author: "F. Scott Fitzgerald",
     nPages: 192,
-    readed: true
+    readed: true,
+    removed: false,
+    id: self.crypto.randomUUID()
   },
   {
     title: "To Kill a Mockingbird",
     author: "Harper Lee",
     nPages: 336,
-    readed: false
+    readed: false,
+    removed: false,
+    id: self.crypto.randomUUID()
   }
 ];
 
@@ -68,27 +76,51 @@ function closeDialog() {
 addBookBtn.addEventListener("click", openDialog);
 dialogCancelBtn.addEventListener("click", closeDialog);
 
-function Book(title, author, pages, readed) {
+function Book(title, author, nPages, readed) {
   if (!new.target) {
     throw Error("You must use the 'new' operator to call the constructor");
   }
 
   this.title = title;
   this.author = author;
-  this.pages = pages;
+  this.nPages = nPages;
   this.readed = readed;
+  this.removed = false;
+  this.id = self.crypto.randomUUID();
 
   this.toggleRead = function() {
-    this.pages = !this.pages;
+    this.readed = !this.readed;
+  }
+
+  this.remove = function() {
+    this.removed = !this.removed;
   }
 }
 
-function addBookToLibrary(book) {
-  myLibrary.push(book);
+function addBookToLibrary() {
+  const bookTitle = document.getElementById("book-title");
+  const bookAuthor = document.getElementById("book-author");
+  const bookPages = document.getElementById("book-pages");
+  const readedSelect = document.getElementById("readed-select");
+
+  if(bookTitle.value && bookAuthor.value && bookPages.value) {
+    myLibrary.push(new Book(bookTitle.value, bookAuthor.value, bookPages.value, readedSelect.value));
+    closeDialog();
+    clearInputs();
+  } else {
+    alert("All inputs are required");
+    return;
+  }
+
 }
 
-const bookTitle = document.querySelector(".book-title");
-const bookAuthor = document.querySelector(".book-author");
-const bookPages = document.querySelector(".book-pages");
-const readedSelect = document.querySelector(".readed-select");
-const dialogAcceptBtn = document.querySelector(".dialog-accept-btn");
+function clearInputs() {
+  document.getElementById("book-title").value = "";
+  document.getElementById("book-author").value = "";
+  document.getElementById("book-pages").value = "";
+}
+
+document.querySelector(".dialog-accept-btn").addEventListener("click", (e) => {
+  addBookToLibrary();
+  renderBooks(myLibrary);
+});

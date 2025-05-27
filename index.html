@@ -11,7 +11,7 @@
 <body>
   <dialog>
     <div>
-      <form>
+      <form id="dialog-form">
         <div>
           <label for="book-title">Title:</label>
           <input type="text" id="book-title" placeholder="Book title">
@@ -22,18 +22,18 @@
         </div>
         <div>
           <label for="book-pages">Pages:</label>
-          <input type="number" id="book-pages" placeholder="352">
+          <input type="text" id="book-pages" placeholder="352">
         </div>
         <div>
           <label for="readed-select">Readed:</label>
           <select name="select" id="readed-select">
-            <option value="readed" selected>Yes</option>
-            <option value="unreaded">No</option>
+            <option value="yes" selected>Yes</option>
+            <option value="no">No</option>
           </select>
         </div>
       </form>
       <div class="dialog-btns">
-        <button type="button" class="dialog-accept-btn btn">Accept</button>
+        <button type="button" class="dialog-accept-btn btn" form="dialog-form">Accept</button>
         <button type="button" class="dialog-cancel-btn btn">Cancel</button>
       </div>
     </div>
